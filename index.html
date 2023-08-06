@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" href="/static/favicon.ico" />
+ <meta charset="UTF-8">
+  <meta name="description" content="Moncahier.org est une plateforme éducative revolutionnaire qui utilise l'intelligence artificielle pour aider les étudiants et les professeurs dans leur travail quotidien. Avec des outils de prise de notes, de rédaction et de gestion de tâches avancés, Moncahier.org offre une expérience d'apprentissage optimale pour tous les niveaux d'éducation.">
+  <meta name="keywords" content="Moncahier.org, plateforme éducative, intelligence artificielle, outils de prise de notes, gestion de tâches">
+  <meta name="author" content="Division21Dev">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mon Cahier Education</title>
+  <style>
+    /* Style pour la vidéo en plein écran */
+    #video-container {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    #video-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ffffff;
+      font-size: 24px;
+      text-align: center;
+      z-index: 1;
+    }
+
+    /* Style pour la section de texte divisée en 4 groupes */
+    #text-section {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+    }
+
+    .text-group {
+      flex-basis: calc(25% - 40px);
+      box-sizing: border-box;
+      padding: 20px;
+      color: wheat;
+      font-size: 18px;
+      text-align: center;
+      background-color: #1c1c1c;
+      border-radius: 10px;
+      margin: 10px;
+    }
+    
+    .text-group h2 {
+      color:#ffffff
+    }
+
+    .text-group p {
+      color: #ffffff;
+    }
+
+    .update-block {
+      color:#ffffff
+    }
+
+    .text-group img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+    
+        /* Style pour la section "Dernières mises à jour" */
+    #update-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1c1c1c;
+    padding: 20px;
+    margin-top: 20px;
+    }
+
+    .update-block {
+    flex-basis: calc(50% - 20px);
+    box-sizing: border-box;
+    padding: 20px;
+    font-size: 18px;
+    text-align: center;
+    background-color: #1c1c1c;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    }
+
+    
+
+    @media (min-width: 768px) {
+    .update-block {
+        flex-basis: calc(25% - 20px);
+    }
+    }
+    @media (max-width: 768px) {
+  #video-container {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    height: auto;
+    margin-left: 30%;
+  }
+
+  #video-overlay {
+    display: none; /* Hide the overlay on mobile */
+  }
+
+  video {
+    width: 100%; /* Make the video take the full width of the container */
+    height: 100%; /* Allow the video to adjust its height while maintaining aspect ratio */
+  }
+
+  /* Adjust other styles as needed */
+  .text-group,
+  .update-block {
+    flex-basis: 100%; /* Make these sections full width on mobile */
+    margin: 10px 0; /* Adjust margins for better spacing */
+  }
+}
+
+
+    /* Style additionnel pour la mise en page et l'apparence */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color:blanchedalmond
+    }
+    
+    #video-overlay h1 {
+      padding: 20px;
+      color:black;
+    }
+    
+
+
+    #video-overlay p {
+      margin-bottom: 10px;
+      color: darkred;
+    }
+    
+    @media (max-width: 768px) {
+      .text-group {
+        color: wheat;
+        flex-basis: 100%;
+      }
+      
+      .update-block {
+        flex-basis: 100%;
+        margin-top: 10px;
+      }
+    }
+    #social-media-section {
+    background-color: #583f3f;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    }
+
+    #social-media-section h1 {
+    color: #000;
+    padding-bottom: 20px;
+    }
+
+    .social-media-block {
+    display: inline-block;
+    width: 200px;
+    margin: 10px;
+    text-align: center;
+    }
+
+    .social-media-block img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    }
+
+    .social-media-block h3 {
+    margin: 10px 0;
+    color: #000;
+    }
+
+    .social-media-block p {
+    color: #000;
+    }
+    .menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 30px;
+  height: 25px;
+  cursor: pointer;
+  padding: 5px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 9999;
+}
+
+    .menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #aaaaaa;
+    transition: background-color 0.5s ease;
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(45, 45, 45, 0.8); /* Couleur de fond avec opacité réduite */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 9998;
+    }
+
+    .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 50px 0 0 0;
+    text-align: center;
+    }
+
+    .menu ul li {
+    margin-bottom: 30px;
+    }
+
+    .menu ul li a {
+    display: inline-block;
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    }
+
+    .menu ul li a:hover {
+    color: #555;
+    }
+
+    .menu.active {
+    transform: translateX(0);
+    }
+    .buttons-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+    }
+    .buttons-container button {
+      margin-left: 10px;
+      background-color: #1c1c1c;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<div class="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <nav class="menu">
+    <ul>
+      <li><a href="/">Accueil</a></li>
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="/bot">Application</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/invite">Invitez</a>
+      <li><a href="/about">A propos</a></li>
+      <li><a href="/contact">Contact</a></li>
+      
+      <li><a href="/checkout">Devenir Premium</a></li>
+      
+      
+    </ul>
+  </nav>
+
+<body>
+  <div id="video-container">
+    <video autoplay loop muted>
+    <source src="moncahier.mp4" type="video/mp4">       
+    </video>
+    <div id="video-overlay">
+      <h1>MonCahier Education</h1>
+      <p>Rendez l'éducation plus simple.</p>
+    </div>
+  </div>
+
+  <div class="buttons-container">
+    
+      <button id="register-button">S'inscrire</button>
+      <button id="login-button">Se connecter</button>
+    
+    </div>
+
+  <div id="text-section">
+    <div class="text-group">
+      <img src="image1.jpg" alt="Image 1">
+      <h2>Flexibilité</h2>
+      <p>Notre intelligence artificielle est flexible et permet d'accomplir de grosses tâches en quelques secondes</p>
+    </div>
+    <div class="text-group">
+      <img src="image2.jpg" alt="Image 2">
+      <h2>Ponctualité</h2>
+      <p>Notre intelligence artificielle est disponible 24 heures sur 24, 7 jours sur 7</p>
+    </div>
+    <div class="text-group">
+      <img src="image3.jpg" alt="Image 3">
+      <h2>Rapidité</h2>
+      <p>Notre technologie conçue par OpenIA est la plus rapide sur le marché</p>
+    </div>
+    <div class="text-group">
+      <img src="image4.jpg" alt="Image 4">
+      <h2>Simplicité</h2>
+      <p>Notre application et nos ressources en ligne sont simples à utiliser</p>
+    </div>
+  </div>
+  <div>
+    <h1 align="center">
+        Dernières mises à jour 📫
+    </h1>
+  </div>
+  <div id="update-section">
+    <div class="update-block">
+      <img src="update1.jpg" alt="Mise à jour 1">
+      <h2>17 mars 2023</h2>
+      <p>Début du projet Mon Cahier Education</p>
+    </div>
+    <div class="update-block">
+      <img src="update2.jpg" alt="Mise à jour 2">
+      <h2>27 avril 2023</h2>
+      <p>Beta lancé!</p>
+    </div>
+    <div class="update-block">
+      <img src="update3.jpg" alt="Mise à jour 3">
+      <h2>12 Juin 2023</h2>
+      <p>Ajout du système de parrainage</p>
+    </div>
+    <div class="update-block">
+      <img src="update4.jpg" alt="Mise à jour 4">
+      <h2>02 Juillet 2023</h2>
+      <p>Optimisation des versions mobiles</p>
+    </div>
+  </div>
+  <div id="social-media-section">
+    <h1>Suivez-nous sur les réseaux sociaux!</h1>
+    <div class="social-media-block">
+      <img src="snapchat.jpg" alt="Snapchat" onclick="redirectTo('https://www.snapchat.com/')">
+      <h3>Snapchat</h3>
+      <p>@moncahier.org</p>
+    </div>
+    <div class="social-media-block">
+      <img src="tiktok.jpg" alt="TikTok" onclick="redirectTo('https://www.tiktok.com/@moncahier.org')">
+      <h3>TikTok</h3>
+      <p>@moncahier.org</p>
+    </div>
+    <div class="social-media-block">
+      <img src="instagram.jpg" alt="Instagram" onclick="redirectTo('https://www.instagram.com/moncahierorg')">
+      <h3>Instagram</h3>
+      <p>@moncahierorg</p>
+    </div>
+  </div>
+  
+  <script>
+    function redirectTo(url) {
+      window.location.href = url;
+    }
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+        this.classList.toggle('active');
+        document.querySelector('.menu').classList.toggle('active');
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+    var registerButton = document.querySelector("#register-button");
+    var loginButton = document.querySelector("#login-button");
+
+    registerButton.addEventListener("click", function() {
+      window.location.href = "/register";
+    });
+
+    loginButton.addEventListener("click", function() {
+      window.location.href = "/login";
+    });
+  });
+  </script>
+  
+  
+  </body>
+</html>
